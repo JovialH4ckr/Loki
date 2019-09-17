@@ -5,10 +5,14 @@ using System.Reflection;
 using System.Threading;
 using Harmony;
 using Loki.Configuration;
+using Loki.Configuration.Plugins;
 
 namespace Loki.Weapons {
     static class Launcher {
-        static Launcher() => HarmonyInstance.Create("loki").PatchAll(typeof(Launcher).Assembly);
+        static Launcher() {
+            PluginManager.DiscoverPlugins();
+            HarmonyInstance.Create("loki").PatchAll(typeof(Launcher).Assembly);
+        }
 
         internal static Assembly RealAssembly;
         

@@ -1,4 +1,5 @@
 ﻿using System;
+using Loki.Configuration.Plugins;
 using Loki.Configuration.Responses;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -29,9 +30,11 @@ namespace Loki.Configuration.Skeleton {
                     return JsonConvert.DeserializeObject<TextResponse>(jo.ToString(), SpecifiedSubclassConversion);
                 case "File":
                     return JsonConvert.DeserializeObject<FileResponse>(jo.ToString(), SpecifiedSubclassConversion);
+                case "Custom":
+                    var resp = PluginManager.ResolveCustomResponse(jo["CustomName"].Value<string>());
+                    return JsonConvert.DeserializeObject(jo.ToString(), resp.GetType(), SpecifiedSubclassConversion);
                 default: throw new NotSupportedException();
             }
-            throw new ArgumentOutOfRangeException();
         }
     }
 }
