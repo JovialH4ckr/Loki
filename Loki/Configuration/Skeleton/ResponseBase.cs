@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Loki.Configuration.Skeleton {
     [JsonConverter(typeof(BaseConverter))]
-    abstract class ResponseBase {
+    public abstract class ResponseBase {
         [JsonRequired]
         public virtual string Type { get; }
 

@@ -13,9 +13,11 @@ namespace Loki.Configuration {
         [JsonRequired]
         public string ExecutablePath { get; set; }
         
-        public IList<string> Parameters { get; set; } = new List<string>();
+        public IList<string> Plugins { get; } = new List<string>();
+        
+        public IList<string> Parameters { get; } = new List<string>();
 
         [JsonRequired]
-        public IList<ResponseBase> Responses { get; set; } = new List<ResponseBase>();
+        public IList<ResponseBase> Responses { get; } = new List<ResponseBase>();
     }
 }

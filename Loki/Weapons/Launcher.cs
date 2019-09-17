@@ -23,7 +23,8 @@ namespace Loki.Weapons {
             
             new Thread(() => {
                 Thread.Sleep(1000); //Make sure ^ can be read
-                asm.EntryPoint.Invoke(null, new object[] { ConfigManager.Settings.Parameters.ToArray() }); //This will need to be changed probably...
+                var entry = asm.EntryPoint;
+                asm.EntryPoint.Invoke(null, entry.GetParameters().Length > 0 ? new object[] { ConfigManager.Settings.Parameters } : null);
             }) { IsBackground = true }.Start();
 
             Server.Go();
