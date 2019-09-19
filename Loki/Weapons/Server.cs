@@ -25,7 +25,7 @@ namespace Loki.Weapons {
                         continue;
                     }
                     
-                    res.ProcessResponse(ctx.Response);
+                    res.ProcessResponse(ctx.Request, ctx.Response);
                     
                     ctx.Response.StatusCode = 200;
                     ctx.Response.Close();

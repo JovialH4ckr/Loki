@@ -1,0 +1,17 @@
+{
+  "Name": "ExamplePluginConfig",
+  "Author": "xsilent007",
+  "ExecutablePath": "Test.exe",
+  "Plugins": [
+  	"PluginExample.dll"
+  ],
+  "Parameters": [],
+  "Responses": [
+  	{
+  		"Type": "Custom",
+  		"Name": "CheckCookies",
+  		"Id": "COOKIES!!!",
+  		"Url": "google.com"
+  	}
+  ]
+}

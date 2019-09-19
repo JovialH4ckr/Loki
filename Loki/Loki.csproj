@@ -58,6 +58,7 @@
     <Compile Include="Configuration\Config.cs" />
     <Compile Include="Configuration\Plugins\CustomResponse.cs" />
     <Compile Include="Configuration\Plugins\IPlugin.cs" />
+    <Compile Include="Configuration\Plugins\PlaceHolderResponse.cs" />
     <Compile Include="Configuration\Plugins\PluginManager.cs" />
     <Compile Include="Interface\Controls\Button.cs" />
     <Compile Include="Interface\Controls\Checkbox.cs" />

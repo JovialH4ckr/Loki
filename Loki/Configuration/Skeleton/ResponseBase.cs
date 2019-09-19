@@ -13,6 +13,6 @@ namespace Loki.Configuration.Skeleton {
         [JsonRequired]
         public string Url { get; set; }
 
-        internal abstract void ProcessResponse(HttpListenerResponse response);
+        public abstract void ProcessResponse(HttpListenerRequest request, HttpListenerResponse response);
     }
 }

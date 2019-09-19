@@ -6,29 +6,40 @@ using Loki.Configuration.Skeleton;
 
 namespace Loki.Configuration.Plugins {
     static class PluginManager {
-        internal static IList<IPlugin> Plugins = new List<IPlugin>();
+        static readonly IList<IPlugin> _plugins = new List<IPlugin>();
         
-        internal static void DiscoverPlugins() {
+        static PluginManager() {
             foreach (var dll in ConfigManager.Settings.Plugins) {
                 var asm = Assembly.LoadFrom(Path.GetFullPath(dll));
                 foreach (var type in asm.GetExportedTypes()) {
                     if (!typeof(IPlugin).IsAssignableFrom(type))
                         continue;
 
-                    Plugins.Add((IPlugin)Activator.CreateInstance(type));
+                    _plugins.Add((IPlugin)Activator.CreateInstance(type));
                 }
             }
         }
 
-        internal static ResponseBase ResolveCustomResponse(string name) {
-            foreach (var p in Plugins) {
+        internal static void ResolveCustomResponses() {
+            for (var i = 0; i < ConfigManager.Settings.Responses.Count; i++) {
+                var curr = ConfigManager.Settings.Responses[i];
+                if (curr.GetType() != typeof(PlaceHolderResponse))
+                    continue;
+
+                var id = (curr as PlaceHolderResponse).Id;
+                ConfigManager.Settings.Responses[i] = ResolveId(id);
+            }
+        }
+        
+        static ResponseBase ResolveId(string id) {
+            foreach (var p in _plugins) {
                 foreach (var c in p.GetResponses()) {
-                    if (c.Name == name)
+                    if (c.Id == id)
                         return c;
                 }
             }
             
-            throw new ArgumentOutOfRangeException(name);
+            throw new ArgumentOutOfRangeException(id);
         }
     }
 }

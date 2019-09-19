@@ -13,6 +13,7 @@ namespace Loki.Configuration {
         [JsonRequired]
         public string ExecutablePath { get; set; }
         
+        [JsonProperty(Order = -2)]
         public IList<string> Plugins { get; } = new List<string>();
         
         public IList<string> Parameters { get; } = new List<string>();

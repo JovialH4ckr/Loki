@@ -13,7 +13,7 @@ namespace Loki.Configuration.Responses {
         public override string ToString() => $"FileResponse [ Url: '{Url}' | Path: '{Path}' ]";
 
         byte[] _cache;
-        internal override void ProcessResponse(HttpListenerResponse response) {
+        public override void ProcessResponse(HttpListenerRequest request, HttpListenerResponse response) {
             var stream = response.OutputStream;
             if (_cache == null)
                 _cache = File.ReadAllBytes(Path);

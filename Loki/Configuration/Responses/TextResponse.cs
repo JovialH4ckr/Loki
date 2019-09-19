@@ -12,7 +12,7 @@ namespace Loki.Configuration.Responses {
 
         public override string ToString() => $"TextResponse [ Url: '{Url}' | Text: '{Text}' ]";
 
-        internal override void ProcessResponse(HttpListenerResponse response) {
+        public override void ProcessResponse(HttpListenerRequest request, HttpListenerResponse response) {
             var stream = response.OutputStream;
             response.ContentEncoding = response.ContentEncoding ?? Encoding.UTF8;
             var txt = response.ContentEncoding.GetBytes(Text);

@@ -17,7 +17,7 @@ namespace Loki.Configuration.Skeleton {
     }
 
     public class BaseConverter : JsonConverter {
-        static readonly JsonSerializerSettings SpecifiedSubclassConversion = new JsonSerializerSettings { ContractResolver = new ConcreteClassConverter() };
+        static readonly JsonSerializerSettings _specifiedSubclassConversion = new JsonSerializerSettings { ContractResolver = new ConcreteClassConverter() };
 
         public override bool CanConvert(Type objectType) => objectType == typeof(ResponseBase);
         public override bool CanWrite => false;
@@ -27,12 +27,11 @@ namespace Loki.Configuration.Skeleton {
             var jo = JObject.Load(reader);
             switch (jo["Type"].Value<string>()) {
                 case "Text":
-                    return JsonConvert.DeserializeObject<TextResponse>(jo.ToString(), SpecifiedSubclassConversion);
+                    return JsonConvert.DeserializeObject<TextResponse>(jo.ToString(), _specifiedSubclassConversion);
                 case "File":
-                    return JsonConvert.DeserializeObject<FileResponse>(jo.ToString(), SpecifiedSubclassConversion);
+                    return JsonConvert.DeserializeObject<FileResponse>(jo.ToString(), _specifiedSubclassConversion);
                 case "Custom":
-                    var resp = PluginManager.ResolveCustomResponse(jo["CustomName"].Value<string>());
-                    return JsonConvert.DeserializeObject(jo.ToString(), resp.GetType(), SpecifiedSubclassConversion);
+                    return new PlaceHolderResponse((string)jo["Id"]); //This will be resolved later
                 default: throw new NotSupportedException();
             }
         }

@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Loki.Configuration.Plugins;
 using Loki.Configuration.Responses;
 using Loki.Configuration.Skeleton;
 using Newtonsoft.Json;
@@ -22,6 +23,7 @@ namespace Loki.Configuration {
                 return;
             
             Settings = JsonConvert.DeserializeObject<Config>(File.ReadAllText(path));
+            PluginManager.ResolveCustomResponses();
         }
     }
 }
